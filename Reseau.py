@@ -34,8 +34,33 @@ class Reseau:
         self.strat = strat
 
     def valider_reseau(self) -> bool:
-        # TODO
-        return False
+        #Vérifier le noeud d'entrée et les noeuds
+        # Le reseau n'est pas null et le noeud d'entrée est bien dans les noeuds
+        if not self.noeuds or self.noeud_entree not in self.noeuds:
+            return False
+
+        #Construire un dictionnaire de voisins pour chaque noeud 
+        # Exemple: si on a arcs = [(0, 1), (1, 2), (2, 3)] donc
+        #  voisins = {0: {1}, 1: {0, 2}, 2: {1, 3}, 3: {2}}
+        voisins = {n: set() for n in self.noeuds}
+        
+        for n1, n2 in self.arcs:
+            if n1 not in voisins and n2 not in voisins:
+                return False
+            voisins[n1].add(n2)
+            voisins[n2].add(n1)
+
+        # Parcours en profondeur depuis le noeud d'entree
+        visites = {self.noeud_entree}
+        a_visiter = [self.noeud_entree]
+        while a_visiter:
+            noeud = a_visiter.pop()
+            for voisin in voisins[noeud] - visites:
+                visites.add(voisin)
+                a_visiter.append(voisin)
+
+        # Verifier que tous les noeuds sont connectes
+        return len(visites) == len(self.noeuds)
 
     def valider_distribution(self, t: Terrain) -> bool:
         # TODO
