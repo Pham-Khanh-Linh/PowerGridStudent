@@ -10,8 +10,16 @@ from io import StringIO
 class TestReseau(unittest.TestCase):
 
     def test_definition_entree(self):
-        # TODO
-        self.fail()
+        r = Reseau()
+
+        r.noeuds[0] = (0, 0)
+        r.noeuds[1] = (0, 1)
+
+        r.definir_entree(0)
+        self.assertEqual(r.noeud_entree, 0)
+
+        r.definir_entree(5)
+        self.assertEqual(r.noeud_entree, -1)
 
     
     def test_ajout_noeud(self):
