@@ -80,8 +80,26 @@ class Reseau:
         self.noeud_entree, self.noeuds, self.arcs  = self.strat.configurer(t)
 
     def afficher(self) -> None:
-        # TODO
-        pass
+        print("=== Reseau electrique ===")
+
+        # Afficher le noeud d'entree
+        print(f"Noeud d'entrée : {self.noeud_entree}")
+
+        # Afficher les noeuds du reseau
+        print("Noeuds :")
+        if self.noeuds:
+            for identifiant, coords in sorted(self.noeuds.items()):
+                print(f"  {identifiant} : {coords}")
+        else:
+            print("  (aucun)")
+
+        # Afficher les arcs du reseau
+        print("Arcs :")
+        if self.arcs:
+            for n1, n2 in sorted(self.arcs):
+                print(f"  {n1} <--> {n2}")
+        else:
+            print("  (aucun)")
 
     def afficher_avec_terrain(self, t: Terrain) -> None:
         for ligne, l in enumerate(t.cases):
