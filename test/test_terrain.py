@@ -1,14 +1,41 @@
 
 import unittest
 import xmlrunner
-
+import os
+import tempfile
 from Terrain import Terrain, Case
 
 class TestTerrain(unittest.TestCase):
 
     def test_chargement(self):
-        # TODO
-        self.fail()
+        # Test du terrain t1
+        t = Terrain()
+        t.charger("terrains/t1.txt")
+
+        self.assertEqual(t.largeur, 21)
+        self.assertEqual(t.hauteur, 10)
+        self.assertEqual(t.get_entree(), (9, 17))
+        self.assertEqual(len(t.get_clients()), 3)
+
+        self.assertEqual(t[0][0], Case.VIDE)
+        self.assertEqual(t[2][2], Case.OBSTACLE)
+        self.assertEqual(t[2][10], Case.CLIENT)
+        self.assertEqual(t[9][17], Case.ENTREE)
+
+        # Test du terrain t2
+        t.charger("terrains/t2.txt")
+
+        self.assertEqual(t.largeur, 21)
+        self.assertEqual(t.hauteur, 10)
+        self.assertEqual(t.get_entree(), (5, 4))
+        self.assertEqual(len(t.get_clients()), 7)
+
+        self.assertEqual(t[0][0], Case.VIDE)
+        self.assertEqual(t[0][12], Case.OBSTACLE)
+        self.assertEqual(t[1][3], Case.CLIENT)
+        self.assertEqual(t[5][4], Case.ENTREE)
+
+
 
     def test_get_entree(self):
         t = Terrain()
